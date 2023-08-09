@@ -159,14 +159,6 @@
                     Margin="10"
                     Style="{StaticResource TitleBarButtonsTheme}"
                     Command="{Binding CloseApplicationCommand}"/>
-            
-            <ProgressBar Grid.Column="2" 
-                         HorizontalAlignment="Center" 
-                         Height="20" 
-                         Margin="0,0,0,0" 
-                         VerticalAlignment="Center" 
-                         Width="300"
-                         Value="{Binding ProgressBarValue, Mode=OneWay}"/>
             <Label Content="{Binding ProgressBarTitle, Mode=OneWay}"
                    Grid.Column="2" 
                    HorizontalAlignment="Center" 
