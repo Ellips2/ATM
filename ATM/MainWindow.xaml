@@ -1,0 +1,196 @@
+﻿<Window x:Class="TextHandler.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModel="clr-namespace:TextHandler.MVVM.ViewModel"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="1000"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        AllowsTransparency="True">
+
+    <Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
+
+    <Border Background="#272537" CornerRadius="15">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" 
+                     Grid.ColumnSpan="4"
+                    x:Name="DragBar" 
+                    Height="50" 
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Stretch"
+                    Background="#18151f"
+                    MouseLeftButtonDown="DragBar_MouseLeftButtonDown"/>
+            
+            <TextBlock Text="Text Handler"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Foreground="AntiqueWhite"
+                       FontSize="24"
+                       FontFamily="Algerian"/>
+
+            <StackPanel Grid.Row="1">
+                <Button Content="Load Files"
+                        Height="50" 
+                        Foreground="White"
+                        FontSize="14"
+                        Style="{StaticResource SideBarButtonTheme}"                             
+                        Command="{Binding OpenFileCommand}"/>                
+                <Label Content="Min word length:"
+                       Grid.Row="1"
+                       Grid.Column="0"
+                       Foreground="#CFCFCF"
+                       FontSize="13"
+                       FontFamily="Arial"
+                       Margin="0,0,0,0"/>
+                <TextBox Text="{Binding SelectedTextFile.MinLengthWord, UpdateSourceTrigger=PropertyChanged}"
+                         Grid.Column="1"
+                         Height="40"
+                         Width="200"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Left"
+                         Margin="0,5,0,0"
+                         Background="#353340"
+                         Foreground="#CFCFCF"
+                         BorderThickness="0"
+                         Padding="5"
+                         PreviewTextInput="NumberValidationTextBox"/>
+                <Label Content="Chars for remove:"
+                       Grid.Row="1"
+                       Grid.Column="0"
+                       Foreground="#CFCFCF"
+                       FontSize="13"
+                       FontFamily="Arial"
+                       Margin="0,0,0,0"/>
+                <TextBox Text="{Binding SelectedTextFile.CharsForDel, UpdateSourceTrigger=PropertyChanged}"
+                         Grid.Column="1"
+                         Height="40"
+                         Width="200"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Left"
+                         Margin="0,5,0,0"
+                         Background="#353340"
+                         Foreground="#CFCFCF"
+                         BorderThickness="0"
+                         Padding="5"/>
+                <Button Content="Start!"
+                        Height="50" 
+                        Foreground="White"
+                        FontSize="14"                        
+                        VerticalAlignment="Bottom"
+                        Style="{StaticResource SideBarButtonTheme}"
+                        Command="{Binding StartWorkCommand}"/>
+                <Button Content="Save Files"
+                        Height="50" 
+                        Foreground="White"
+                        FontSize="14"
+                        Style="{StaticResource SideBarButtonTheme}"
+                        Command="{Binding SaveFileCommand}" />
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Grid.Column="1" Background="#222c">
+                <Label Content="Your Files" 
+                   Foreground="White"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="0,10,0,0"
+                   FontSize="14"
+                   Grid.Column="1" Grid.Row="1"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Grid.Column="2">
+                <Label Content="Before Process" 
+                        Foreground="White"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        Margin="0,10,0,0"
+                        FontSize="14"/>
+                <TextBox
+                        Margin="5,0,5,0"
+                        TextWrapping="Wrap"
+                        Text="{Binding SelectedTextFile.OldText, UpdateSourceTrigger=PropertyChanged}"
+                        TextAlignment="Left"
+                        Foreground="Gray"
+                        Background="Transparent"
+                        Height="510" 
+                        VerticalScrollBarVisibility="Auto"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Grid.Column="3">
+                <Label Content="After Process" 
+                       Foreground="White"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"
+                       Margin="0,10,0,0"
+                       FontSize="14"
+                       Grid.Column="3" Grid.Row="1"/>
+                <TextBox Margin="5,0,10,0"
+                         TextWrapping="Wrap"
+                         Text="{Binding SelectedTextFile.NewText, UpdateSourceTrigger=PropertyChanged}"
+                         TextAlignment="Left"
+                         Foreground="White"
+                         Height="510"
+                         Background="Transparent"
+                         VerticalScrollBarVisibility="Auto"/>
+            </StackPanel>
+
+            <Button Content="X" 
+                    Width="35" 
+                    Height="35"                     
+                    HorizontalAlignment="Right" 
+                    Grid.Row="0"
+                    Grid.Column="3" 
+                    Margin="10"
+                    Style="{StaticResource TitleBarButtonsTheme}"
+                    Command="{Binding CloseApplicationCommand}"/>
+            
+            <ProgressBar Grid.Column="2" 
+                         HorizontalAlignment="Center" 
+                         Height="20" 
+                         Margin="0,0,0,0" 
+                         VerticalAlignment="Center" 
+                         Width="300"
+                         Value="{Binding ProgressBarValue, Mode=OneWay}"/>
+            <Label Content="{Binding ProgressBarTitle, Mode=OneWay}"
+                   Grid.Column="2" 
+                   HorizontalAlignment="Center" 
+                   Margin="0,0,0,0" 
+                   VerticalAlignment="Center"
+                   Foreground="Black"/>
+            <ListBox Grid.Column="1" 
+                     Grid.Row="1"
+                     Background="Transparent"
+                     Margin="0,40,0,1"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                     ItemsSource="{Binding TextFiles}"
+                     SelectedItem="{Binding SelectedTextFile}"
+                     SelectionMode="Single">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="5">
+                            <TextBlock FontSize="14" Foreground="White" Text="{Binding Path=Name }" />
+                            <TextBlock FontSize="10" Foreground="White" Text="{Binding Path=MinLengthWord}" />
+                            <TextBlock FontSize="10" Foreground="White" Text="{Binding Path=CharsForDel}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>                    
+            </ListBox>
+        </Grid>
+    </Border>
+</Window>
