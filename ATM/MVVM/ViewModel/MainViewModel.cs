@@ -1,5 +1,5 @@
 ﻿using System;
-using TextHandler.Core;
+using ATM.Core;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Collections.Generic;

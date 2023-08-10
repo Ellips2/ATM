@@ -4,9 +4,9 @@ using System.Text;
 
 namespace ATM.MVVM.Model
 {
-    class UserCard
+    class ATMstorage
     {
-        private int balance;
-
+        private int sumBalance;
+        private List<Banknote> banknotes;
     }
 }

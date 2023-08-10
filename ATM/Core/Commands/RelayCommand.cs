@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Input;
-using TextHandler.Core.Commands;
+using ATM.Core.Commands;
 
-namespace TextHandler.Core
+namespace ATM.Core
 {
     internal class RelayCommand : Command
     {

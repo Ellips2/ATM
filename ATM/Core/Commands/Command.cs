@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace TextHandler.Core.Commands
+namespace ATM.Core.Commands
 {
     internal abstract class Command : ICommand
     {

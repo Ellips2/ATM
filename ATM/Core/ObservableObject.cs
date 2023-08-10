@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace TextHandler.Core
+namespace ATM.Core
 {
     public class ObservableObject : INotifyPropertyChanged
     {

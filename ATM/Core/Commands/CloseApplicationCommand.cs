@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TextHandler.Core.Commands;
+using ATM.Core.Commands;
 
-namespace TextHandler.Core
+namespace ATM.Core
 {
     internal class CloseApplicationCommand : Command
     {
