@@ -2,7 +2,7 @@
 using System.Windows.Input;
 using System.Text.RegularExpressions;
 
-namespace TextHandler
+namespace ATM
 {
     public partial class MainWindow : Window
     {
