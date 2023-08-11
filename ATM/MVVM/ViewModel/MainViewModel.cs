@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using ATM.MVVM.Model;
 using ATM.Core.Services;
 using System.Linq;
+using System.Windows.Input;
+using ATM.Core.Commands;
 
 namespace ATM.MVVM.ViewModel
 {
@@ -14,6 +16,7 @@ namespace ATM.MVVM.ViewModel
 
         
         #region [Данные банкомата]
+        private ObservableCollection<MoneyCassetteModel> newMoneyCassettes = new ObservableCollection<MoneyCassetteModel>();
         private ObservableCollection<MoneyCassetteModel> moneyCassettes;
         public ObservableCollection<MoneyCassetteModel> MoneyCassettes { get => moneyCassettes; set {moneyCassettes = value; OnPropertyChanged(nameof(MoneyCassettes)); } }
 
@@ -21,6 +24,35 @@ namespace ATM.MVVM.ViewModel
         public int[] Denominations { get => denominations; }
         
         private int totalSum = 0;
+
+        public RelayCommandWithP<object> OKCommand
+        {
+            get
+            {
+                if (_okCommand == null)
+                    _okCommand = new RelayCommandWithP<object>(OkCommand_Execute);
+                return _okCommand;
+            }
+            set
+            {
+                ;
+            }
+        }
+        private RelayCommandWithP<object> _okCommand = null;
+
+        private void OkCommand_Execute(object obj)
+        {
+            int addedDenomination = Convert.ToInt32(obj);
+            for (int i = 0; i < newMoneyCassettes.Count; i++)
+            {
+                if (newMoneyCassettes[i].Denomination == addedDenomination)
+                {
+                    newMoneyCassettes[i].CountBill++;
+                }
+            }
+            MoneyCassettes = newMoneyCassettes;
+        }
+
         public int TotalSum { get { return totalSum = GetTotalSum(); } set { totalSum = value; if (totalSum < 0) totalSum = 0; OnPropertyChanged(nameof(TotalSum)); } }
 
         private string currency = "gold";
@@ -49,14 +81,14 @@ namespace ATM.MVVM.ViewModel
         private RelayCommand cashCommand;
         public RelayCommand CashCommand { get { return cashCommand ?? (cashCommand = new RelayCommand(obj => { TryCash(); })); } }
 
-        //private RelayCommand depositCommand;
-        //public RelayCommand DepositCommand { get { return depositCommand ?? (depositCommand = new RelayCommand(obj => { _ATMservices.CCash(desireSumm, selectedDenomination, ref moneyCassettes); })); } }
+        private RelayCommand depositCommand;
+        public RelayCommand DepositCommand { get { return depositCommand ?? (depositCommand = new RelayCommand(obj => { TryDeposite(); })); } }
         #endregion
 
         public MainViewModel()
         {
             CloseApplicationCommand = new RelayCommand(closeApplicationCommand.Execute, closeApplicationCommand.CanExecute);
-
+            OKCommand = new RelayCommandWithP<object>(OkCommand_Execute);
             //Создаем кассеты с определенным номиналом купюр и случайным количеством купюр
             MoneyCassettes = new ObservableCollection<MoneyCassetteModel>();
             Random rand = new Random();
@@ -92,16 +124,27 @@ namespace ATM.MVVM.ViewModel
         }
         private void TryDeposite()
         {
-            if (desireSumm % selectedDenomination == 0)
+            newMoneyCassettes.Clear();
+            for (int i = 0; i < denominations.Length; i++)
             {
-                Message = _ATMservices.Cash(desireSumm, selectedDenomination, MoneyCassettes);
-                OnPropertyChanged(nameof(TotalSum));
+                newMoneyCassettes.Add(new MoneyCassetteModel() { Denomination = denominations[i], CountBill = 0 });
             }
-            else
-            {
-                Message.Text = "Non correct input. Please enter another amount.";
-                Message.Color = "#FF0000";
-            }
+            //InputSumm = 0;
+            //if (desireSumm % selectedDenomination == 0)
+            //{
+            //    //Message = _ATMservices.Deposite(desireSumm, selectedDenomination, MoneyCassettes);
+            //    OnPropertyChanged(nameof(TotalSum));
+            //}
+            //else
+            //{
+            //    Message.Text = "Non correct input. Please enter another amount.";
+            //    Message.Color = "#FF0000";
+            //}
+        }
+
+        private void AddBanknote(object denomination)
+        {
+            //InputSumm += denomination ;
         }
     }
 }

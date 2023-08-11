@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using System.Text.RegularExpressions;
+using ATM.MVVM.ViewModel;
 
 namespace ATM
 {
@@ -9,6 +10,7 @@ namespace ATM
         public MainWindow()
         {            
             InitializeComponent();
+            this.DataContext = new MainViewModel();
         }
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {

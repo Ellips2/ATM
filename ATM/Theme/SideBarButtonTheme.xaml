@@ -10,26 +10,14 @@
                               Background="{TemplateBinding Background}">
 
                             <TextBlock Text="{TemplateBinding Property=Content}" 
-                                       VerticalAlignment="Center"
-                                       Margin="30,0,0,0"
+                                       VerticalAlignment="Center"                                      
                                        FontFamily="Arial" FontWeight="Bold"/>
 
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
+            
         </Style.Setters>
-
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="true">
-                <Setter Property="Background" Value="#1b1b"/>
-            </Trigger>
-            <Trigger Property="IsPressed" Value="true">
-                <Setter Property="Background" Value="#22202f"/>
-            </Trigger>            
-        </Style.Triggers>
     </Style>
 </ResourceDictionary>

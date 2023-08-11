@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ATM.Core.Commands;
+using ATM.MVVM.ViewModel;
 
 namespace ATM.Core
 {
