@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using ATM.Core;
+﻿using ATM.Core;
 using ATM.MVVM.Model;
 using System.Collections.ObjectModel;
 using System.Linq;
