@@ -7,10 +7,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Theme/MenuButtonTheme.xaml" />
-                <ResourceDictionary Source="Theme/ModernTextboxTheme.xaml" />
                 <ResourceDictionary Source="Theme/TitleBarButtonsTheme.xaml" />
-                <ResourceDictionary Source="Theme/SideBarButtonTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate DataType="{x:Type viewModel:DepositeViewModel}">
@@ -20,7 +17,10 @@
             <DataTemplate DataType="{x:Type viewModel:CashViewModel}">
                 <view:CashView DataContext="{Binding}"/>
             </DataTemplate>
-            
+
+            <DataTemplate DataType="{x:Type viewModel:EmptyViewModel}">
+                <view:EmptyView DataContext="{Binding}"/>
+            </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

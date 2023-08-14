@@ -20,6 +20,7 @@ namespace ATM.MVVM.ViewModel
         #region [Для переключения между View]
         public RelayCommand CashViewCommand { get; set; }
         public RelayCommand DepositeViewCommand { get; set; }
+        public RelayCommand EmptyViewCommand { get; set; }
 
         private object currentView;
         public object CurrentView
@@ -27,13 +28,15 @@ namespace ATM.MVVM.ViewModel
             get { return currentView; }
             set { currentView = value;
                 if (currentView == CashVM) DepositeVM.CreateNewMoneyCassets();
-                if (currentView == DepositeVM) CashVM.SetDefault(); 
+                if (currentView == DepositeVM) CashVM.SetDefault();
+                if (currentView == EmptyVM) { CashVM.SetDefault(); DepositeVM.CreateNewMoneyCassets(); }
                 OnPropertyChanged();
             }
         }
 
         public CashViewModel CashVM { get; set; }
         public DepositeViewModel DepositeVM { get; set; }
+        public EmptyViewModel EmptyVM { get; set; }
         #endregion
 
 
@@ -59,9 +62,9 @@ namespace ATM.MVVM.ViewModel
             //Переключение между View
             CashVM = new CashViewModel();
             DepositeVM = new DepositeViewModel();
-            CurrentView = CashVM;
-            CashViewCommand = new RelayCommand(o => { CurrentView = CashVM; });
-            DepositeViewCommand = new RelayCommand(o => { CurrentView = DepositeVM; });
+            CurrentView = EmptyVM;
+            CashViewCommand = new RelayCommand(o => { if (CurrentView != CashVM) CurrentView = CashVM; else CurrentView = EmptyVM; });
+            DepositeViewCommand = new RelayCommand(o => { if (CurrentView != DepositeVM) CurrentView = DepositeVM; else CurrentView = EmptyVM; });
 
             //Создаем кассеты с определенным номиналом купюр и их случайным количеством
             MoneyCassettes = new ObservableCollection<MoneyCassetteModel>();
