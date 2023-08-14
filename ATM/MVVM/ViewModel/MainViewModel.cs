@@ -74,6 +74,7 @@ namespace ATM.MVVM.ViewModel
                 MoneyCassettes.Add(new MoneyCassetteModel() { Denomination = denominations[i], CountBill = rand.Next(0, MoneyCassetteModel.MAX_BILL) });
             }
         }
+
         private int GetTotalSum()
         {
             int total = 0;

@@ -16,7 +16,6 @@
                 HorizontalAlignment="Left"
                 Text="{Binding DesireSumm, UpdateSourceTrigger=PropertyChanged}"
                 Height="40" Width="120" 
-                InputScope="Number"
                 Margin="0,0,0,10"/>
         <ComboBox
                 HorizontalAlignment="Left" 

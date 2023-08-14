@@ -1,9 +1,9 @@
-﻿using System.Windows.Input;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using ATM.Core;
 using ATM.MVVM.Model;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System;
 
 namespace ATM.MVVM.ViewModel
 {
@@ -18,33 +18,43 @@ namespace ATM.MVVM.ViewModel
         public int SelectedDenomination { get => selectedDenomination; set { selectedDenomination = value; OnPropertyChanged(nameof(SelectedDenomination)); } }
 
         private int desireSumm = 0;
-        public int DesireSumm { get => desireSumm; set { desireSumm = value; OnPropertyChanged(nameof(DesireSumm)); } }        
+        public int DesireSumm { get => desireSumm; set { if (NumberValidationTextBox(value.ToString())) desireSumm = value; else desireSumm = 0; OnPropertyChanged(nameof(DesireSumm)); } }        
 
         public CashViewModel()
         {
             MainVM = MainViewModel.Instance;
             selectedDenomination = MainVM.Denominations[0];    //Номинал для размена по умолчанию
         }
-
-        public void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        private bool NumberValidationTextBox(string obj)
         {
-            Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
+            Char[] ch = obj.ToCharArray();
+            for (int i = 0; i < ch.Length; i++)
+            {
+                if (!Char.IsNumber(ch[i]))
+                {
+                    return false;
+                }
+            }            
+            return true;
         }
 
         private void TryCash()
         {
-            for (int i = 0; i < MainVM.MoneyCassettes.Count; i++)
+            if (desireSumm > 0)
             {
-                if (desireSumm % MainVM.MoneyCassettes[i].Denomination == 0)
+                for (int i = 0; i < MainVM.MoneyCassettes.Count; i++)
                 {
-                    MainVM.Message = Cash(desireSumm, selectedDenomination, MainVM.MoneyCassettes);
-                    OnPropertyChanged(nameof(MainVM.TotalSum));
-                    return;
+                    if (desireSumm % MainVM.MoneyCassettes[i].Denomination == 0)
+                    {
+                        MainVM.Message = Cash(desireSumm, selectedDenomination, MainVM.MoneyCassettes);
+                        OnPropertyChanged(nameof(MainVM.TotalSum));
+                        return;
+                    }
                 }
             }
+            DesireSumm = 0;
             MainVM.Message.Text = "Non correct input. Please enter another amount.";
-            MainVM.Message.Color = "#FF0000";
+            MainVM.Message.Color = "#FF0000";                        
         }
 
         public MessageModel Cash(int desireSumm, int desireBancnote, ObservableCollection<MoneyCassetteModel> moneyCassette)
