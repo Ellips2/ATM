@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="ATM.MVVM.View.CashView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ATM.MVVM.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="230" d:DesignWidth="254">
+
+    <StackPanel>
+        <Label Content="Your Summ:"               
+               HorizontalContentAlignment="Left" 
+               FontWeight="Bold" FontSize="15"
+               Margin="0,0,0,10"/>
+        <TextBox 
+                FontSize="15" FontWeight="Bold"
+                HorizontalAlignment="Left"
+                Text="{Binding DesireSumm, UpdateSourceTrigger=PropertyChanged}"
+                Height="40" Width="120" 
+                InputScope="Number"
+                Margin="0,0,0,10"/>
+        <ComboBox
+                HorizontalAlignment="Left" 
+                Width="120"
+                SelectedItem="{Binding SelectedDenomination}"
+                ItemsSource="{Binding DataContext.Denominations, RelativeSource={RelativeSource AncestorType=Window}}" Height="30"
+                Margin="0,0,0,10"/>
+        <Button Content="Confirm"
+                Width="120" Height="50" 
+                HorizontalAlignment="Left"                
+                Command="{Binding CashCommand}"
+                Margin="0,0,0,10"/>
+    </StackPanel>
+</UserControl>
