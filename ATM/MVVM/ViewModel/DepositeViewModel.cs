@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using ATM.MVVM.Model;
 using ATM.Core;
 using System.Collections.ObjectModel;
@@ -70,7 +68,7 @@ namespace ATM.MVVM.ViewModel
             return total;
         }
 
-        private void CreateNewMoneyCassets()
+        public void CreateNewMoneyCassets()
         {
             newMoneyCassettes.Clear();
             for (int i = 0; i < MainVM.Denominations.Length; i++)

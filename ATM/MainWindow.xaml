@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModel="clr-namespace:ATM.MVVM.ViewModel"
-        xmlns:local="clr-namespace:ATM.MVVM.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="700"
         WindowStyle="None"
@@ -31,11 +30,6 @@
             <Grid.Background>
                 <ImageBrush ImageSource="/Images/ATM.png"/>
             </Grid.Background>
-
-            <!--<Image Height="700" Width="700"
-                   Source="/Images/ATM.png"
-                   Grid.RowSpan="2"
-                   VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>-->
 
             <Border x:Name="DragBar" 
                     Grid.ColumnSpan="2"
@@ -77,8 +71,6 @@
                                 <TextBlock Text="{Binding Path=Denomination}" FontWeight="Bold" FontSize="15" Foreground="White"/>
                                 <TextBlock Text=" banknote: " FontWeight="Bold" FontSize="15" Foreground="White"/>
                                 <TextBlock Text="{Binding Path=CountBill}" FontWeight="Bold" FontSize="15" Foreground="White"/>
-                                <TextBlock Text=" " FontWeight="Bold" FontSize="15" Foreground="White"/>
-                                <!--<TextBlock Text="{Binding Path=Currency}" FontWeight="Bold" FontSize="15" Foreground="White"/>-->
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -93,43 +85,7 @@
             <Button Grid.Row="1"
                     Content="Deposit" Margin="122,90,0,83" FontWeight="Bold" FontSize="15"
                     Command="{Binding DepositeViewCommand}"/>
-            
-            <!--<Label Content="Your Summ:" Grid.Column="1" Margin="13,3,127,199" HorizontalContentAlignment="Center" FontWeight="Bold" FontSize="15" Grid.Row="1"/>
-            <TextBox Grid.Row="1" Grid.Column="1" 
-                     Margin="10,36,114,139" 
-                     FontSize="15" FontWeight="Bold" 
-                     PreviewTextInput="NumberValidationTextBox"
-                     Text="{Binding DesireSumm, UpdateSourceTrigger=PropertyChanged}"/>
-            <ComboBox Grid.Column="1" Grid.Row="1" 
-                      HorizontalAlignment="Left" VerticalAlignment="Top" 
-                      Margin="10,91,0,0"
-                      Width="130"
-                      SelectedItem="{Binding SelectedDenomination}"
-                      ItemsSource="{Binding Denominations}">                
-            </ComboBox>-->
-            
-            <!--<StackPanel Grid.Column="1" Grid.Row="1" Margin="0,0,58,43">
-                <Button Content="Confirm" Width="171" Height="30" HorizontalAlignment="Left"/>
-                <ListBox 
-                     Background="Gray"
-                     Margin="5,10,0,0"
-                     ScrollViewer.VerticalScrollBarVisibility="Auto" 
-                     ItemsSource="{Binding MoneyCassettes, UpdateSourceTrigger=PropertyChanged}"
-                     SelectionMode="Single" Height="149">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="5" Orientation="Horizontal">
-                                <Button FontSize="20" Foreground="Gray"
-                                    Content="{Binding Path=Denomination}"
-                                    Width="120" Height="40" FontWeight="Bold"
-                                    CommandParameter="{Binding Path=Denomination}" 
-                                    Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBox}}, Path=DataContext.AddBanknoteCommand}"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </StackPanel>-->
-
+                        
             <ContentControl Grid.Row="1" Grid.Column="1"
                             Content="{Binding CurrentView}"/>
 

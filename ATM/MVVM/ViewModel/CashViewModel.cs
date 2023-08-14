@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using System.Text.RegularExpressions;
 using ATM.Core;
 using ATM.MVVM.Model;
@@ -10,15 +9,16 @@ namespace ATM.MVVM.ViewModel
 {
     internal class CashViewModel : ObservableObject
     {
+        public MainViewModel MainVM { get; set; }
+
+        private RelayCommand cashCommand;
+        public RelayCommand CashCommand { get { return cashCommand ?? (cashCommand = new RelayCommand(obj => { TryCash(); })); } }
+
         private int selectedDenomination;
         public int SelectedDenomination { get => selectedDenomination; set { selectedDenomination = value; OnPropertyChanged(nameof(SelectedDenomination)); } }
 
         private int desireSumm = 0;
-        public int DesireSumm { get => desireSumm; set { desireSumm = value; OnPropertyChanged(nameof(DesireSumm)); } }
-
-        private RelayCommand cashCommand;
-        public RelayCommand CashCommand { get { return cashCommand ?? (cashCommand = new RelayCommand(obj => { TryCash(); })); } }
-        public MainViewModel MainVM { get; set; }
+        public int DesireSumm { get => desireSumm; set { desireSumm = value; OnPropertyChanged(nameof(DesireSumm)); } }        
 
         public CashViewModel()
         {
@@ -49,7 +49,6 @@ namespace ATM.MVVM.ViewModel
 
         public MessageModel Cash(int desireSumm, int desireBancnote, ObservableCollection<MoneyCassetteModel> moneyCassette)
         {
-
             if (moneyCassette.Sum(item => item.CountBill) > 0)
             {
                 MoneyCassetteModel cassette = new MoneyCassetteModel();
@@ -89,6 +88,12 @@ namespace ATM.MVVM.ViewModel
                 }
             }
             return cassette;
+        }
+
+        public void SetDefault()
+        {
+            selectedDenomination = MainVM.Denominations[0];
+            DesireSumm = 0;
         }
     }    
 }

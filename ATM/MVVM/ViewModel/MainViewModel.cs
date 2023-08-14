@@ -2,10 +2,6 @@
 using ATM.Core;
 using System.Collections.ObjectModel;
 using ATM.MVVM.Model;
-using ATM.Core.Services;
-using System.Linq;
-using System.Windows.Input;
-using ATM.Core.Commands;
 
 namespace ATM.MVVM.ViewModel
 {
@@ -20,23 +16,24 @@ namespace ATM.MVVM.ViewModel
         private MessageModel message = new MessageModel();
         public MessageModel Message { get => message; set { message = value; OnPropertyChanged(nameof(Message)); } }
 
+
         #region [Для переключения между View]
         public RelayCommand CashViewCommand { get; set; }
         public RelayCommand DepositeViewCommand { get; set; }
 
         private object currentView;
-
         public object CurrentView
         {
             get { return currentView; }
             set { currentView = value;
+                if (currentView == CashVM) DepositeVM.CreateNewMoneyCassets();
+                if (currentView == DepositeVM) CashVM.SetDefault(); 
                 OnPropertyChanged();
             }
         }
 
         public CashViewModel CashVM { get; set; }
         public DepositeViewModel DepositeVM { get; set; }
-
         #endregion
 
 
@@ -57,16 +54,16 @@ namespace ATM.MVVM.ViewModel
         public MainViewModel()
         {
             Instance = this;
+            CloseApplicationCommand = new RelayCommand(closeApplicationCommand.Execute, closeApplicationCommand.CanExecute);
 
+            //Переключение между View
             CashVM = new CashViewModel();
             DepositeVM = new DepositeViewModel();
             CurrentView = CashVM;
             CashViewCommand = new RelayCommand(o => { CurrentView = CashVM; });
             DepositeViewCommand = new RelayCommand(o => { CurrentView = DepositeVM; });
 
-            CloseApplicationCommand = new RelayCommand(closeApplicationCommand.Execute, closeApplicationCommand.CanExecute);
-
-            //Создаем кассеты с определенным номиналом купюр и случайным количеством купюр
+            //Создаем кассеты с определенным номиналом купюр и их случайным количеством
             MoneyCassettes = new ObservableCollection<MoneyCassetteModel>();
             Random rand = new Random();
             for (int i = 0; i < denominations.Length; i++)
